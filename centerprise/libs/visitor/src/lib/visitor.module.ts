@@ -11,6 +11,8 @@ import { RouterModule } from '@angular/router';
 import { PoiModule } from '@centerprise/poi';
 import { PoiListComponent } from './poi-list/poi-list.component';
 import { MatCardModule } from '@angular/material/card';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { MapComponent } from './map/map.component';
 
 //centerprise
 
@@ -28,8 +30,9 @@ import { MatCardModule } from '@angular/material/card';
 
     PoiModule,
     MatCardModule,
+    GoogleMapsModule,
   ],
 
-  declarations: [VisitorComponent, PoiListComponent],
+  declarations: [VisitorComponent, PoiListComponent, MapComponent],
 })
 export class VisitorModule {}

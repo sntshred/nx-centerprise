@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { PoiActions, PoiSelectors } from '@centerprise/poi';
+import { PoiActions, PoiEntity, PoiSelectors } from '@centerprise/poi';
 
 @Component({
   selector: 'centerprise-poi-list',
@@ -11,8 +11,11 @@ import { PoiActions, PoiSelectors } from '@centerprise/poi';
 export class PoiListComponent implements OnInit {
   constructor(private store: Store) {}
   pois$ = this.store.select(PoiSelectors.getAllPoi);
-  
+
   ngOnInit(): void {
     this.store.dispatch(PoiActions.init());
+  }
+  selectPoi(poi: PoiEntity) {
+    this.store.dispatch(PoiActions.selectPoi({ poiId: poi.id }));
   }
 }
