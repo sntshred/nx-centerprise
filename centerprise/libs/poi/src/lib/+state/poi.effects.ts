@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import { fetch } from '@nrwl/angular';
 
-import * as PoiActions from './poi.actions';
 import * as PoiFeature from './poi.reducer';
 import { map } from 'rxjs/operators';
-
+import { PoiActions, PoiSelectors } from '@centerprise/poi';
 import { PoiService } from '../poi.service';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class PoiEffects {
@@ -23,6 +23,28 @@ export class PoiEffects {
         onError: (action, error) => {
           console.error('Error', error);
           return PoiActions.loadPoiFailure({ error });
+        },
+      })
+    )
+  );
+
+  visit$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(PoiActions.visitPoi),
+
+      fetch({
+        run: (action) => {
+          const stat = localStorage.getItem('tour-' + action.poiId);
+
+          const total = stat ? Number(stat) + 1 : 1;
+
+          localStorage.setItem(
+            'tour-' + action.poiId,
+
+            total.toString()
+          );
+
+          return EMPTY;
         },
       })
     )
